@@ -27,8 +27,13 @@ module VirtualKeywords
       methods = {}
       klass.instance_methods(false).each do |method_name|
         key = ClassAndMethodName.new(klass, method_name)
-        translated = @parser.translate_instance_method(klass, method_name)
-        methods[key] = translated
+        begin
+          translated = @parser.translate_instance_method(klass, method_name)
+          puts "successfully translated method " + method_name.to_s
+          methods[key] = translated
+        rescue Exception => e
+          puts "failed to translate method " + method_name.to_s + " : " + e.to_s
+        end
       end
 
       methods

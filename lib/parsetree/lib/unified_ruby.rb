@@ -45,6 +45,10 @@ module UnifiedRuby
       when :lasgn then
         block[-1] = :"&#{block[-1]}"
         exp = block
+      when :lit then
+        exp = block
+      when :lvar then
+        exp = block
       else
         raise "huh?: #{block.inspect}"
       end

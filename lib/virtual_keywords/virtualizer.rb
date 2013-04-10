@@ -147,8 +147,20 @@ module VirtualKeywords
       new_mirror_hash = {}
       mirror_hash.each do |class_and_method_name, sexp|
         new_sexp = rewritten_sexp(sexp, rewriter)
-        new_code = @sexp_stringifier.stringify new_sexp
-        @class_reflection.install_method_on_class(klass, new_code)
+        begin
+          new_code = @sexp_stringifier.stringify new_sexp
+          @class_reflection.install_method_on_class(klass, new_code)
+        rescue Exception => msg
+          puts "FAILED: " + msg.to_s
+          puts "THE OLD SEXP IS: " + sexp.to_s
+          puts ""
+          puts "THE NEW SEXP IS: " + new_sexp.to_s
+
+          puts "NOW LETS TRY IT ON OLD SEXP"
+          puts @sexp_stringifier.stringify(sexp)
+
+          raise "TIME TO END"
+        end
         new_mirror_hash[class_and_method_name] = new_sexp
       end
       @sexps_for_classes[klass] = new_mirror_hash

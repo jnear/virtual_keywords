@@ -31,18 +31,29 @@ module VirtualKeywords
       # This ugly sexp turns into the following Ruby code:
       # VirtualKeywords::REWRITTEN_KEYWORDS.call_if(
       #     self, lambda { condition }, lambda { then_do }, lambda { else_do })
-      s(:call,
-        s(:colon2,
-          s(:const, :VirtualKeywords),
-          :REWRITTEN_KEYWORDS
-        ), :call_if,
-        s(:array,
-          s(:self),
-          s(:iter, s(:fcall, :lambda), nil, condition),
-          s(:iter, s(:fcall, :lambda), nil, then_do),
-          s(:iter, s(:fcall, :lambda), nil, else_do)
-        )
-      )
+      # s(:call,
+      #   s(:colon2,
+      #     s(:const, :VirtualKeywords),
+      #     :REWRITTEN_KEYWORDS
+      #   ), :call_if,
+      #   s(:array,
+      #     s(:self),
+      #     s(:iter, s(:fcall, :lambda), nil, condition),
+      #     s(:iter, s(:fcall, :lambda), nil, then_do),
+      #     s(:iter, s(:fcall, :lambda), nil, else_do)
+      #   )
+      # )
+
+      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
+        s(:call,
+          s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS),
+          :call_if, s(:arglist, s(:self), 
+                      s(:iter, s(:call, nil, :lambda,
+                                 s(:arglist)), nil, condition), 
+                      s(:iter, s(:call, nil, :lambda,
+                                 s(:arglist)), nil, then_do), 
+                      s(:iter, s(:call, nil, :lambda,
+                                 s(:arglist)), nil, else_do)))) 
     end
   end
 
@@ -57,17 +68,24 @@ module VirtualKeywords
   #   second: (Sexp) the second argument to the method, which should be
   #       wrapped in a lambda then passed to REWRITTEN_KEYWORDS. 
   def self.call_operator_replacement(function_name, first, second)
-    s(:call,
-      s(:colon2,
-        s(:const, :VirtualKeywords),
-        :REWRITTEN_KEYWORDS
-      ), function_name,
-      s(:array,
-        s(:self),
-        s(:iter, s(:fcall, :lambda), nil, first),
-        s(:iter, s(:fcall, :lambda), nil, second)
-      )
-    )
+    # s(:call,
+    #   s(:colon2,
+    #     s(:const, :VirtualKeywords),
+    #     :REWRITTEN_KEYWORDS
+    #   ), function_name,
+    #   s(:array,
+    #     s(:self),
+    #     s(:iter, s(:fcall, :lambda), nil, first),
+    #     s(:iter, s(:fcall, :lambda), nil, second)
+    #   )
+    # )
+
+    s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
+      s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
+        function_name, 
+        s(:arglist, s(:self), 
+          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, first), 
+          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, second))))
   end
 
   # SexpProcessor subclass that rewrites "and" expressions.
@@ -131,16 +149,22 @@ module VirtualKeywords
     def rewrite_not(expression)
       value = expression[1]
 
-      s(:call,
-        s(:colon2,
-          s(:const, :VirtualKeywords),
-          :REWRITTEN_KEYWORDS
-        ), :call_not,
-        s(:array,
-          s(:self),
-          s(:iter, s(:fcall, :lambda), nil, value)
-        )
-      )
+      # s(:call,
+      #   s(:colon2,
+      #     s(:const, :VirtualKeywords),
+      #     :REWRITTEN_KEYWORDS
+      #   ), :call_not,
+      #   s(:array,
+      #     s(:self),
+      #     s(:iter, s(:fcall, :lambda), nil, value)
+      #   )
+      # )
+
+      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
+        s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
+          :call_not, 
+          s(:arglist, s(:self), 
+            s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, value))))
     end
   end
 
@@ -174,17 +198,23 @@ module VirtualKeywords
             "but got #{third}, this is probably a bug."
       end
 
-      s(:call,
-        s(:colon2,
-          s(:const, :VirtualKeywords),
-          :REWRITTEN_KEYWORDS
-        ), :call_while,
-        s(:array,
-          s(:self),
-          s(:iter, s(:fcall, :lambda), nil, condition),
-          s(:iter, s(:fcall, :lambda), nil, body)
-        )
-      )
+      # s(:call,
+      #   s(:colon2,
+      #     s(:const, :VirtualKeywords),
+      #     :REWRITTEN_KEYWORDS
+      #   ), :call_while,
+      #   s(:array,
+      #     s(:self),
+      #     s(:iter, s(:fcall, :lambda), nil, condition),
+      #     s(:iter, s(:fcall, :lambda), nil, body)
+      #   )
+      # )
+
+      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
+        s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
+          :call_while, s(:arglist, s(:self), 
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, condition), 
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body))))
     end
   end
 
@@ -214,17 +244,22 @@ module VirtualKeywords
             "but got #{third}, this is probably a bug."
       end
 
-      s(:call,
-        s(:colon2,
-          s(:const, :VirtualKeywords),
-          :REWRITTEN_KEYWORDS
-        ), :call_until,
-        s(:array,
-          s(:self),
-          s(:iter, s(:fcall, :lambda), nil, condition),
-          s(:iter, s(:fcall, :lambda), nil, body)
-        )
-      )
+      # s(:call,
+      #   s(:colon2,
+      #     s(:const, :VirtualKeywords),
+      #     :REWRITTEN_KEYWORDS
+      #   ), :call_until,
+      #   s(:array,
+      #     s(:self),
+      #     s(:iter, s(:fcall, :lambda), nil, condition),
+      #     s(:iter, s(:fcall, :lambda), nil, body)
+      #   )
+      #   )
+      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
+        s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
+          :call_until, s(:arglist, s(:self), 
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, condition), 
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body))))
     end
   end
 end

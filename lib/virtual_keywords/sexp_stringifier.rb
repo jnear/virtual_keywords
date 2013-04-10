@@ -22,7 +22,8 @@ module VirtualKeywords
     #   (String) Ruby code equivalent to the sexp.
     def stringify sexp
       sexp_copy = VirtualKeywords.deep_copy_array sexp
-      @ruby2ruby.process(@unifier.process(sexp_copy))
+      #@ruby2ruby.process(@unifier.process(sexp_copy))
+      @ruby2ruby.process(sexp_copy)
     end
   end
 end

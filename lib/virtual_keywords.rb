@@ -2,6 +2,7 @@ begin
   require 'parse_tree' # 1.8
 rescue LoadError
   # 1.9
+  require 'sourcify'
   require 'method_source'
   require 'ruby_parser'
   # HACK: parse_tree complains if I try to require it, but I do need the Unifier

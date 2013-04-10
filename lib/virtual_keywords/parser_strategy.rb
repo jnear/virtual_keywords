@@ -6,7 +6,8 @@ module VirtualKeywords
       if RUBY_VERSION.start_with? '1.8'
         ParseTreeStrategy.new(ParseTree, SexpProcessor.new)
       else
-        RubyParserStrategy.new(RubyParser.new)
+        #RubyParserStrategy.new(RubyParser.new)
+        SourcifyStrategy.new
       end
     end
   end
@@ -62,6 +63,30 @@ module VirtualKeywords
     #   (Sexp) the method, turned into a sexp.
     def translate_instance_method(klass, method_name)
       @ruby_parser.parse(klass.instance_method(method_name).source)
+    end
+  end
+
+  # Parser strategy that uses sourcify
+  class SourcifyStrategy
+    def initialize
+      #nothing?
+    end
+
+    # Translate an instance method of a class.
+    # 
+    # Arguments:
+    #   klass: (Class) the class.
+    #   method_name: (String) the name of the method to translate.
+    #
+    # Returns:
+    #   (Sexp) the method, turned into a sexp.
+    def translate_instance_method(klass, method_name)
+      meth = klass.new.method(method_name)
+      puts "got the method " + meth.to_s + " : " + meth.class.to_s
+      puts "source location is " + meth.source_location.to_s
+      sexp = meth.to_sexp
+      puts "the sexp is " + sexp.to_s
+      sexp
     end
   end
 end

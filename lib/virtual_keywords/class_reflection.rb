@@ -68,6 +68,9 @@ module VirtualKeywords
     #         ...
     #       end
     def install_method_on_class(klass, method_code)
+      puts "class: " + klass.to_s
+      puts "THE CODE IS: "
+      puts method_code
       klass.class_eval method_code
     end
 
