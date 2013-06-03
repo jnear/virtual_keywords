@@ -44,7 +44,6 @@ module VirtualKeywords
       #   )
       # )
 
-      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
         s(:call,
           s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS),
           :call_if, s(:arglist, s(:self), 
@@ -53,7 +52,7 @@ module VirtualKeywords
                       s(:iter, s(:call, nil, :lambda,
                                  s(:arglist)), nil, then_do), 
                       s(:iter, s(:call, nil, :lambda,
-                                 s(:arglist)), nil, else_do)))) 
+                                 s(:arglist)), nil, else_do)))
     end
   end
 
@@ -80,12 +79,11 @@ module VirtualKeywords
     #   )
     # )
 
-    s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
       s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
         function_name, 
         s(:arglist, s(:self), 
           s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, first), 
-          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, second))))
+          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, second)))
   end
 
   # SexpProcessor subclass that rewrites "and" expressions.
@@ -160,11 +158,10 @@ module VirtualKeywords
       #   )
       # )
 
-      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
         s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
           :call_not, 
           s(:arglist, s(:self), 
-            s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, value))))
+            s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, value)))
     end
   end
 
@@ -210,11 +207,10 @@ module VirtualKeywords
       #   )
       # )
 
-      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
         s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
           :call_while, s(:arglist, s(:self), 
                          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, condition), 
-                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body))))
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body)))
     end
   end
 
@@ -255,11 +251,10 @@ module VirtualKeywords
       #     s(:iter, s(:fcall, :lambda), nil, body)
       #   )
       #   )
-      s(:iter, s(:call, nil, :proc, s(:arglist)), nil, 
         s(:call, s(:colon2, s(:const, :VirtualKeywords), :REWRITTEN_KEYWORDS), 
           :call_until, s(:arglist, s(:self), 
                          s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, condition), 
-                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body))))
+                         s(:iter, s(:call, nil, :lambda, s(:arglist)), nil, body)))
     end
   end
 end

@@ -82,11 +82,7 @@ module VirtualKeywords
     #   (Sexp) the method, turned into a sexp.
     def translate_instance_method(klass, method_name)
       meth = klass.new.method(method_name)
-      puts "got the method " + meth.to_s + " : " + meth.class.to_s
-      puts "source location is " + meth.source_location.to_s
-      sexp = meth.to_sexp
-      puts "the sexp is " + sexp.to_s
-      sexp
+      meth.to_sexp
     end
   end
 end

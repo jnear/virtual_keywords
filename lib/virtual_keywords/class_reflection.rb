@@ -68,10 +68,11 @@ module VirtualKeywords
     #         ...
     #       end
     def install_method_on_class(klass, method_code)
-      puts "class: " + klass.to_s
-      puts "THE CODE IS: "
-      puts method_code
-      klass.class_eval method_code
+      begin
+        klass.class_eval method_code
+      rescue Exception => e
+        puts "failed to install method on class " + klass.to_s
+      end
     end
 
     # Install a method on an object. When object.method_name is called,
